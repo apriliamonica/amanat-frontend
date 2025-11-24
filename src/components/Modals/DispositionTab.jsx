@@ -11,13 +11,14 @@ const DispositionTab = ({ mail }) => {
     notes: ''
   });
 
-  // Mock data disposisi existing - use useMemo
+  // Mock data disposisi existing - calculate now OUTSIDE useMemo
+  const now = useMemo(() => Date.now(), []); // Only run once on mount
+  
   const existingDispositions = useMemo(() => {
     if (mail.dispositions && mail.dispositions.length > 0) {
       return mail.dispositions;
     }
     
-    const now = Date.now();
     return [
       {
         id: 1,
@@ -38,7 +39,7 @@ const DispositionTab = ({ mail }) => {
         status: 'in_progress'
       }
     ];
-  }, [mail.dispositions]);
+  }, [mail.dispositions, now]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
