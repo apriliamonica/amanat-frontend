@@ -1,38 +1,45 @@
 // src/components/modals/AttachmentTab.jsx
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { FileText, Download, Eye, Upload, X, File, Image, FileSpreadsheet } from 'lucide-react';
 import { formatFileSize, getFileIcon } from '../../utils/helpers';
 
 const AttachmentTab = ({ mail }) => {
   const [uploading, setUploading] = useState(false);
 
-  // Mock attachments data
-  const attachments = mail.attachments || [
-    {
-      id: 1,
-      name: 'Surat_Resmi.pdf',
-      size: 2458632,
-      type: 'application/pdf',
-      uploadDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-      url: '#'
-    },
-    {
-      id: 2,
-      name: 'Lampiran_Data.xlsx',
-      size: 458632,
-      type: 'application/vnd.ms-excel',
-      uploadDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-      url: '#'
-    },
-    {
-      id: 3,
-      name: 'Foto_Lokasi.jpg',
-      size: 1258632,
-      type: 'image/jpeg',
-      uploadDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      url: '#'
+  // Mock attachments data - use useMemo to avoid impure function calls during render
+  const attachments = useMemo(() => {
+    if (mail.attachments && mail.attachments.length > 0) {
+      return mail.attachments;
     }
-  ];
+    
+    const now = Date.now();
+    return [
+      {
+        id: 1,
+        name: 'Surat_Resmi.pdf',
+        size: 2458632,
+        type: 'application/pdf',
+        uploadDate: new Date(now - 2 * 24 * 60 * 60 * 1000),
+        url: '#'
+      },
+      {
+        id: 2,
+        name: 'Lampiran_Data.xlsx',
+        size: 458632,
+        type: 'application/vnd.ms-excel',
+        uploadDate: new Date(now - 2 * 24 * 60 * 60 * 1000),
+        url: '#'
+      },
+      {
+        id: 3,
+        name: 'Foto_Lokasi.jpg',
+        size: 1258632,
+        type: 'image/jpeg',
+        uploadDate: new Date(now - 1 * 24 * 60 * 60 * 1000),
+        url: '#'
+      }
+    ];
+  }, [mail.attachments]);
 
   const handleFileUpload = (e) => {
     const files = e.target.files;
