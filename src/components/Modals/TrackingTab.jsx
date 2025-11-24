@@ -1,39 +1,53 @@
 // src/components/modals/TrackingTab.jsx
+import { useMemo } from 'react';
 import { CheckCircle, Circle, Clock, User } from 'lucide-react';
 import { formatDate } from '../../utils/helpers';
 
 const TrackingTab = ({ mail }) => {
-  // Mock tracking data - nanti diganti dengan data real
-  const trackingHistory = mail.trackingHistory || [
-    {
-      id: 1,
-      status: 'Surat Diterima',
-      timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-      user: 'Admin Sekretariat',
-      notes: 'Surat masuk diterima dan diregistrasi'
-    },
-    {
-      id: 2,
-      status: 'Disposisi Kepala Dinas',
-      timestamp: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000),
-      user: 'Kepala Dinas',
-      notes: 'Untuk ditindaklanjuti oleh Kabid Teknik'
-    },
-    {
-      id: 3,
-      status: 'Diteruskan ke Kabid',
-      timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-      user: 'Sekretaris',
-      notes: 'Diteruskan sesuai disposisi'
-    },
-    {
-      id: 4,
-      status: 'Sedang Diproses',
-      timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      user: 'Kabid Teknik',
-      notes: 'Dalam proses peninjauan'
+  // Mock tracking data - use useMemo to avoid impure function calls
+  const trackingHistory = useMemo(() => {
+    if (mail.trackingHistory && mail.trackingHistory.length > 0) {
+      return mail.trackingHistory;
     }
-  ];
+    
+    const now = Date.now();
+    return [
+      {
+        id: 1,
+        status: 'Surat Diterima',
+        timestamp: new Date(now - 5 * 24 * 60 * 60 * 1000),
+        user: 'Admin Sekretariat',
+        notes: 'Surat masuk diterima dan diregistrasi'
+      },
+      {
+        id: 2,
+        status: 'Disposisi Kepala Dinas',
+        timestamp: new Date(now - 4 * 24 * 60 * 60 * 1000),
+        user: 'Kepala Dinas',
+        notes: 'Untuk ditindaklanjuti oleh Kabid Teknik'
+      },
+      {
+        id: 3,
+        status: 'Diteruskan ke Kabid',
+        timestamp: new Date(now - 3 * 24 * 60 * 60 * 1000),
+        user: 'Sekretaris',
+        notes: 'Diteruskan sesuai disposisi'
+      },
+      {
+        id: 4,
+        status: 'Sedang Diproses',
+        timestamp: new Date(now - 1 * 24 * 60 * 60 * 1000),
+        user: 'Kabid Teknik',
+        notes: 'Dalam proses peninjauan'
+      }
+    ];
+  }, [mail.trackingHistory]);
+
+  // Calculate days running with useMemo
+  const daysRunning = useMemo(() => {
+    if (!mail.receivedDate) return 0;
+    return Math.floor((Date.now() - new Date(mail.receivedDate).getTime()) / (1000 * 60 * 60 * 24));
+  }, [mail.receivedDate]);
 
   const getStatusIcon = (index, total) => {
     if (index < total - 1) {
@@ -124,7 +138,7 @@ const TrackingTab = ({ mail }) => {
         </div>
         <div className="text-center">
           <p className="text-2xl font-bold text-amber-600">
-            {Math.floor((Date.now() - new Date(mail.receivedDate)) / (1000 * 60 * 60 * 24))}
+            {daysRunning}
           </p>
           <p className="text-xs text-gray-600">Hari Berjalan</p>
         </div>
