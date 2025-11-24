@@ -4,19 +4,20 @@ import Badge from '../common/Badge';
 import { formatDate } from '../../utils/helpers';
 import { STATUS_CONFIG } from '../../data/statusConfig';
 
-const DetailTab = ({ mail, type }) => {
-  const InfoRow = ({ icon: Icon, label, value, valueClass = '' }) => (
-    <div className="flex items-start py-3 border-b border-gray-100 last:border-0">
-      <div className="flex items-center min-w-[200px]">
-        <Icon className="w-5 h-5 text-gray-400 mr-3" />
-        <span className="text-sm font-medium text-gray-600">{label}</span>
-      </div>
-      <div className={`flex-1 text-sm ${valueClass || 'text-gray-900'}`}>
-        {value || '-'}
-      </div>
+// Move InfoRow outside to avoid creating component during render
+const InfoRow = ({ icon: Icon, label, value, valueClass = '' }) => (
+  <div className="flex items-start py-3 border-b border-gray-100 last:border-0">
+    <div className="flex items-center min-w-[200px]">
+      <Icon className="w-5 h-5 text-gray-400 mr-3" />
+      <span className="text-sm font-medium text-gray-600">{label}</span>
     </div>
-  );
+    <div className={`flex-1 text-sm ${valueClass || 'text-gray-900'}`}>
+      {value || '-'}
+    </div>
+  </div>
+);
 
+const DetailTab = ({ mail, type }) => {
   return (
     <div className="space-y-6">
       {/* Status Badge */}
