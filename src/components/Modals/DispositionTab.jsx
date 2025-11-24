@@ -1,5 +1,5 @@
 // src/components/modals/DispositionTab.jsx
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { UserCheck, Calendar, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import Badge from '../common/Badge';
 import { formatDate } from '../../utils/helpers';
@@ -11,27 +11,34 @@ const DispositionTab = ({ mail }) => {
     notes: ''
   });
 
-  // Mock data disposisi existing
-  const existingDispositions = mail.dispositions || [
-    {
-      id: 1,
-      from: 'Kepala Dinas',
-      to: 'Kabid Teknik',
-      instruction: 'Untuk ditindaklanjuti segera',
-      notes: 'Mohon koordinasi dengan pihak terkait',
-      date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-      status: 'completed'
-    },
-    {
-      id: 2,
-      from: 'Kabid Teknik',
-      to: 'Seksi Perencanaan',
-      instruction: 'Untuk dikaji dan dibuat laporan',
-      notes: 'Deadline 1 minggu',
-      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-      status: 'in_progress'
+  // Mock data disposisi existing - use useMemo
+  const existingDispositions = useMemo(() => {
+    if (mail.dispositions && mail.dispositions.length > 0) {
+      return mail.dispositions;
     }
-  ];
+    
+    const now = Date.now();
+    return [
+      {
+        id: 1,
+        from: 'Kepala Dinas',
+        to: 'Kabid Teknik',
+        instruction: 'Untuk ditindaklanjuti segera',
+        notes: 'Mohon koordinasi dengan pihak terkait',
+        date: new Date(now - 3 * 24 * 60 * 60 * 1000),
+        status: 'completed'
+      },
+      {
+        id: 2,
+        from: 'Kabid Teknik',
+        to: 'Seksi Perencanaan',
+        instruction: 'Untuk dikaji dan dibuat laporan',
+        notes: 'Deadline 1 minggu',
+        date: new Date(now - 2 * 24 * 60 * 60 * 1000),
+        status: 'in_progress'
+      }
+    ];
+  }, [mail.dispositions]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
