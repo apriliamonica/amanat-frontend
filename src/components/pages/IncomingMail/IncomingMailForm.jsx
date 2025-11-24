@@ -22,7 +22,6 @@ const IncomingMailForm = ({ onClose, onSubmit, initialData = null }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [uploading, setUploading] = useState(false);
 
   const mailTypes = [
     'Surat Dinas',

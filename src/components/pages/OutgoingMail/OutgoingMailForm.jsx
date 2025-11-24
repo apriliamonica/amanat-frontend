@@ -24,7 +24,6 @@ const OutgoingMailForm = ({ onClose, onSubmit, initialData = null }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [uploading, setUploading] = useState(false);
 
   const mailTypes = [
     'Surat Dinas',
@@ -60,20 +59,16 @@ const OutgoingMailForm = ({ onClose, onSubmit, initialData = null }) => {
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
-      setUploading(true);
-      setTimeout(() => {
-        setFormData(prev => ({
-          ...prev,
-          attachments: [...prev.attachments, ...files.map(f => ({
-            id: Date.now() + Math.random(),
-            name: f.name,
-            size: f.size,
-            type: f.type,
-            file: f
-          }))]
-        }));
-        setUploading(false);
-      }, 1000);
+      setFormData(prev => ({
+        ...prev,
+        attachments: [...prev.attachments, ...files.map(f => ({
+          id: Date.now() + Math.random(),
+          name: f.name,
+          size: f.size,
+          type: f.type,
+          file: f
+        }))]
+      }));
     }
   };
 
