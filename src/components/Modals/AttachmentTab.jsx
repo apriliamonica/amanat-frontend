@@ -6,13 +6,14 @@ import { formatFileSize, getFileIcon } from '../../utils/helpers';
 const AttachmentTab = ({ mail }) => {
   const [uploading, setUploading] = useState(false);
 
-  // Mock attachments data - use useMemo to avoid impure function calls during render
+  // Mock attachments data - calculate now OUTSIDE useMemo
+  const now = useMemo(() => Date.now(), []); // Only run once on mount
+  
   const attachments = useMemo(() => {
     if (mail.attachments && mail.attachments.length > 0) {
       return mail.attachments;
     }
     
-    const now = Date.now();
     return [
       {
         id: 1,
@@ -39,7 +40,7 @@ const AttachmentTab = ({ mail }) => {
         url: '#'
       }
     ];
-  }, [mail.attachments]);
+  }, [mail.attachments, now]);
 
   const handleFileUpload = (e) => {
     const files = e.target.files;
