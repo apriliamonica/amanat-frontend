@@ -4,13 +4,15 @@ import { CheckCircle, Circle, Clock, User } from 'lucide-react';
 import { formatDate } from '../../utils/helpers';
 
 const TrackingTab = ({ mail }) => {
+  // Calculate now OUTSIDE useMemo to avoid impure function call during render
+  const now = useMemo(() => Date.now(), []); // Only run once on mount
+  
   // Mock tracking data - use useMemo to avoid impure function calls
   const trackingHistory = useMemo(() => {
     if (mail.trackingHistory && mail.trackingHistory.length > 0) {
       return mail.trackingHistory;
     }
     
-    const now = Date.now();
     return [
       {
         id: 1,
@@ -41,13 +43,13 @@ const TrackingTab = ({ mail }) => {
         notes: 'Dalam proses peninjauan'
       }
     ];
-  }, [mail.trackingHistory]);
+  }, [mail.trackingHistory, now]);
 
   // Calculate days running with useMemo
   const daysRunning = useMemo(() => {
     if (!mail.receivedDate) return 0;
-    return Math.floor((Date.now() - new Date(mail.receivedDate).getTime()) / (1000 * 60 * 60 * 24));
-  }, [mail.receivedDate]);
+    return Math.floor((now - new Date(mail.receivedDate).getTime()) / (1000 * 60 * 60 * 24));
+  }, [mail.receivedDate, now]);
 
   const getStatusIcon = (index, total) => {
     if (index < total - 1) {
