@@ -20,3 +20,28 @@ export const SURAT_KELUAR_STATUS = {
   REVIEW_KETUA: 'REVIEW_KETUA',
   TERKIRIM: 'TERKIRIM'
 }
+
+export const PRIORITY = {
+  TINGGI: 'Tinggi',
+  SEDANG: 'Sedang',
+  RENDAH: 'Rendah'
+}
+
+export const CATEGORY = {
+  UNDANGAN: 'Undangan',
+  PERMOHONAN: 'Permohonan',
+  PEMBERITAHUAN: 'Pemberitahuan',
+  VERIFIKASI: 'Verifikasi',
+  AUDIT: 'Audit',
+  KETERANGAN: 'Keterangan',
+  PROPOSAL: 'Proposal',
+  LAINNYA: 'Lainnya'
+}
+
+export const MENU_ITEMS = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'Mail' },
+  { id: 'surat-masuk', label: 'Surat Masuk', icon: 'Mail' },
+  { id: 'surat-keluar', label: 'Surat Keluar', icon: 'Send' },
+  { id: 'disposisi', label: 'Disposisi', icon: 'FileText' },
+  { id: 'arsip', label: 'Arsip', icon: 'Archive' }
+]
