@@ -1,6 +1,6 @@
 // src/components/pages/OutgoingMail/OutgoingMailForm.jsx
 import { useState } from 'react';
-import { Save, X, Upload, Calendar, FileText, Building2, User, Tag, Send } from 'lucide-react';
+import { Save, X, Upload, FileText, Send } from 'lucide-react';
 import Button from '../../common/Button';
 import { validateMailNumber, validateRequired, validateEmail } from '../../../utils/validators';
 import { generateAgendaNumber } from '../../../utils/helpers';

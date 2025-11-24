@@ -1,6 +1,6 @@
 // src/components/pages/IncomingMail/IncomingMailForm.jsx
 import { useState } from 'react';
-import { Save, X, Upload, Calendar, FileText, Building2, User, Tag, AlertCircle } from 'lucide-react';
+import { Save, X, Upload, FileText } from 'lucide-react';
 import Button from '../../common/Button';
 import { validateMailNumber, validateRequired } from '../../../utils/validators';
 import { generateAgendaNumber } from '../../../utils/helpers';
@@ -56,21 +56,17 @@ const IncomingMailForm = ({ onClose, onSubmit, initialData = null }) => {
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
-      setUploading(true);
-      // Simulate file upload
-      setTimeout(() => {
-        setFormData(prev => ({
-          ...prev,
-          attachments: [...prev.attachments, ...files.map(f => ({
-            id: Date.now() + Math.random(),
-            name: f.name,
-            size: f.size,
-            type: f.type,
-            file: f
-          }))]
-        }));
-        setUploading(false);
-      }, 1000);
+      // Simulate file upload without loading state
+      setFormData(prev => ({
+        ...prev,
+        attachments: [...prev.attachments, ...files.map(f => ({
+          id: Date.now() + Math.random(),
+          name: f.name,
+          size: f.size,
+          type: f.type,
+          file: f
+        }))]
+      }));
     }
   };
 
