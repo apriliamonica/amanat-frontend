@@ -45,3 +45,34 @@ export const getRoleDisplayName = (role) => {
 export const getStatusLabel = (status) => {
   return status.replace(/_/g, ' ')
 }
+
+export const generateAgendaNumber = (prefix = 'SM') => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const random = Math.floor(Math.random() * 1000);
+  return `${prefix}-${year}${month}-${String(random).padStart(4, '0')}`;
+};
+
+export const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+};
+
+export const getFileIcon = (mimeType) => {
+  // Import icons - pastikan ada di component yang pakai
+  const icons = {
+    pdf: 'FileText',
+    image: 'Image',
+    excel: 'FileSpreadsheet',
+    default: 'File'
+  };
+  
+  if (mimeType.includes('pdf')) return icons.pdf;
+  if (mimeType.includes('image')) return icons.image;
+  if (mimeType.includes('sheet') || mimeType.includes('excel')) return icons.excel;
+  return icons.default;
+};
