@@ -12,7 +12,7 @@ const DispositionTab = ({ mail }) => {
   });
 
   // Mock data disposisi existing - calculate now OUTSIDE useMemo
-  const now = useMemo(() => Date.now(), []); // Only run once on mount
+const initialNow = Date.now();n once on mount
   
   const existingDispositions = useMemo(() => {
     if (mail.dispositions && mail.dispositions.length > 0) {

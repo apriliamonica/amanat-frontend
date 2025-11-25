@@ -12,7 +12,7 @@ export const validateRequired = (value) => {
  * Format: XXX/XXX/XXX/XXXX or B/123/DIR/2024
  */
 export const validateMailNumber = (mailNumber) => {
-  const pattern = /^[A-Z0-9\/-]+$/i;
+ const pattern = /^[A-Z0-9/-]+$/i; // Garis miring (/) tidak perlu di-escape di dalam [].
   return pattern.test(mailNumber);
 };
 

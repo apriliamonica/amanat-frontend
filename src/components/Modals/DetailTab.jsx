@@ -5,7 +5,7 @@ import { formatDate } from '../../utils/helpers';
 import { STATUS_CONFIG } from '../../data/statusConfig';
 
 // Move InfoRow outside to avoid creating component during render
-const InfoRow = ({ icon: IconComponent, label, value, valueClass = '' }) => (
+const InfoRow = ({ icon: label, value, valueClass = '' }) => (
   <div className="flex items-start py-3 border-b border-gray-100 last:border-0">
     <div className="flex items-center min-w-[200px]">
       <IconComponent className="w-5 h-5 text-gray-400 mr-3" />

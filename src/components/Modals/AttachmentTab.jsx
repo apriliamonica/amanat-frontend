@@ -7,7 +7,12 @@ const AttachmentTab = ({ mail }) => {
   const [uploading, setUploading] = useState(false);
 
   // Mock attachments data - calculate now OUTSIDE useMemo
-  const now = useMemo(() => Date.now(), []); // Only run once on mount
+// Deklarasikan nilai awal di luar useMemo, tetapi masih di dalam komponen
+const initialNow = Date.now();
+
+// Gunakan useMemo untuk memastikan nilai ini stabil di setiap re-render
+// dan tambahkan 'initialNow' ke array dependencies (lihat Bagian 2)
+const now = useMemo(() => initialNow, []);/ Only run once on mount
   
   const attachments = useMemo(() => {
     if (mail.attachments && mail.attachments.length > 0) {

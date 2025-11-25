@@ -1,12 +1,14 @@
 // src/components/modals/TrackingTab.jsx
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
+// Module-level stable timestamp to avoid calling Date.now() during render
+const APP_NOW = Date.now();
 import { CheckCircle, Circle, Clock, User } from 'lucide-react';
 import { formatDate } from '../../utils/helpers';
 
 const TrackingTab = ({ mail }) => {
-  // Calculate now OUTSIDE useMemo to avoid impure function call during render
-  const now = useMemo(() => Date.now(), []); // Only run once on mount
-  
+  // Gunakan nilai `now` yang ditentukan pada waktu modul di-load untuk
+  // menghindari pemanggilan `Date.now()` selama render (lint-friendly).
+  const now = APP_NOW;
   // Mock tracking data - use useMemo to avoid impure function calls
   const trackingHistory = useMemo(() => {
     if (mail.trackingHistory && mail.trackingHistory.length > 0) {
